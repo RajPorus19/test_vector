@@ -21,7 +21,7 @@ void vector_free(p_s_vector p_vector){
 
 
 void vector_set(p_s_vector p_vector, size_t i, double v){
-  p_vector->array[i] = v;
+  if(i < p_vector->length) p_vector->array[0] = v;
 }
 
 void vector_insert(p_s_vector p_vector, size_t i, double v){
@@ -48,7 +48,7 @@ void vector_print(p_s_vector p_vector){
     char first_bracket = ' ';
     if(i==0){first_bracket = '{';}
     if(i == p_vector->length - 1) comma = '\0';
-    printf("%c%ld%c",first_bracket, i, comma);
+    printf("%c%.2lf%c",first_bracket, p_vector->array[i], comma);
   }
   printf("}\n");
 }
