@@ -40,7 +40,26 @@ void vector_erase(p_s_vector p_vector, size_t i){
   }
 }
 
+void vector_push_back(p_s_vector p_vector, double v){
+  vector_insert(p_vector, p_vector->length - 1, v);
+}
 
+void vector_pop_back(p_s_vector p_vector){
+  vector_erase(p_vector, p_vector->length - 1);
+}
+
+// TODO
+void vector_clear(p_s_vector p_vector){
+  p_vector->length = 0;
+  p_vector->array = realloc(p_vector->array, 0);
+}
+
+int vector_empty(p_s_vector p_vector){
+  return p_vector->length;
+}
+size_t vector_size(p_s_vector p_vector){
+  return p_vector->length;
+}
 // for debugging & testing
 void vector_print(p_s_vector p_vector){
   for(size_t i = 0; i<p_vector->length ; i++){
