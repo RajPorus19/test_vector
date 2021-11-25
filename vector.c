@@ -27,8 +27,8 @@ void vector_set(p_s_vector p_vector, size_t i, double v){
 void vector_insert(p_s_vector p_vector, size_t i, double v){
   p_vector->length++;
   p_vector->array = realloc(p_vector->array, sizeof(s_vector) * p_vector->length);
-  for(size_t j = i; j < p_vector->length - 1; j++){
-    p_vector->array[j] = p_vector->array[j+1];
+  for(size_t j = p_vector->length - 1; j > i ; j--){
+    p_vector->array[j] = p_vector->array[j-1];
   }
   p_vector->array[i] = v;
 }
