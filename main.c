@@ -7,6 +7,13 @@ void test_insert_vector(int* counter, p_s_vector vect);
 void test_vector_erase(int* counter, p_s_vector vect);
 void test_vector_set(int* counter, p_s_vector vect);
 
+// TODO
+void test_vector_push_back(int* counter, p_s_vector vect);
+void test_vector_pop_back(int* counter, p_s_vector vect);
+void test_vector_clear(p_s_vector p_vector);
+int test_vector_empty(p_s_vector p_vector);
+size_t test_vector_size(p_s_vector p_vector);
+
 // TODO void vector_set(p_s_vector p_vector, size_t i, double v);
 
 int main(void){
@@ -17,6 +24,8 @@ int main(void){
 	test_insert_vector(&counter, vect);
 	test_vector_erase(&counter, vect);
 	test_vector_set(&counter, vect);
+	test_vector_push_back(&counter, vect);
+	test_vector_pop_back(&counter, vect);
 	// print result
 	if(counter==0) printf("All tests have passed successfuly ! :) \n");
 	else printf("%d tests have failed :(  \n",counter);
@@ -85,6 +94,48 @@ void test_vector_set(int* counter, p_s_vector vect){
 	}
 	if(valid!=1) {
 		printf("set_vector did not work as expected.\n");
+		*counter += 1;
+	}
+}
+
+
+void test_vector_push_back(int* counter, p_s_vector vect){
+	int valid = 1;
+	// assert length is still 3
+	if(vect->length != 3) valid++;
+	vector_push_back(vect, 100);
+	// assert length is now 4
+	if(vect->length != 4) valid++;
+	vector_push_back(vect, 200);
+	// assert length is now 5
+	if(vect->length != 5) valid++;
+	// assert unique items with index
+	if(vect->array[0]!= 10) valid++;
+	if(vect->array[1]!= 0) valid++;
+	if(vect->array[2]!= 0) valid++;
+	if(vect->array[3]!= 100) valid++;
+	if(vect->array[4]!= 200) valid++;
+	if(valid!=1) {
+		printf("vector_push_back did not work as expected.\n");
+		*counter += 1;
+	}
+}
+
+
+void test_vector_pop_back(int* counter, p_s_vector vect){
+	int valid = 1;
+	// assert length is still 5
+	if(vect->length != 5) valid++;
+	vector_pop_back(vect);
+	// assert length is now 4
+	if(vect->length != 4) valid++;
+	// assert unique items with index
+	if(vect->array[0]!= 10) valid++;
+	if(vect->array[1]!= 0) valid++;
+	if(vect->array[2]!= 0) valid++;
+	if(vect->array[3]!= 100) valid++;
+	if(valid!=1) {
+		printf("vector_pop_back did not work as expected.\n");
 		*counter += 1;
 	}
 }
