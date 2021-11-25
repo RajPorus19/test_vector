@@ -1,1 +1,21 @@
-HIRUTHAYARAJ Raj Porus
+#+TITLE: test_vector
+#+AUTHOR: HIRUTHAYARAJ Raj Porus
+
+This is a school homework.
+
+* Build and run the project
+Dependencies :
+- make
+#+begin_src sh
+make
+./myprog
+#+end_src
+
+* Run with hot reload
+Dependencies :
+- make
+- entr
+- find or fd
+#+begin_src sh
+find . | entr sh -c "clear & make &"
+#+end_src
