@@ -2,23 +2,26 @@
 #include <stdio.h>
 #include "vector.h"
 
-void test_set_vector(int* counter);
-void test_insert_vector(int* counter);
+void test_vector_alloc(int* counter, p_s_vector vect);
+void test_insert_vector(int* counter, p_s_vector vect);
+void test_vector_erase(int* counter, p_s_vector vect);
 
 int main(void){
 	int counter = 0;
 	// run tests
-	test_set_vector(&counter);
-	test_insert_vector(&counter);
+	p_s_vector vect = vector_alloc(3);
+	test_vector_alloc(&counter, vect);
+	test_insert_vector(&counter, vect);
+	test_vector_erase(&counter, vect);
 	// print result
 	if(counter==0) printf("All tests have passed successfuly ! :) \n");
 	else printf("%d tests have failed :(  \n",counter);
+	free(vect);
 	return 0;
 };
 
-void test_set_vector(int* counter){
+void test_vector_alloc(int* counter, p_s_vector vect){
 	int valid = 1;
-	p_s_vector vect = vector_alloc(3);
 	// assert length is 3
 	if(vect->length != 3) valid++;
 	// assert all the doubles are equal to zero
@@ -29,15 +32,10 @@ void test_set_vector(int* counter){
 		printf("set_vector did not work as expected.\n");
 		*counter += 1;
 	}
-	free(vect);
 }
 
-
-void test_insert_vector(int* counter){
+void test_insert_vector(int* counter, p_s_vector vect){
 	int valid = 1;
-	p_s_vector vect = vector_alloc(3);
-	// assert length is 3
-	if(vect->length != 3) valid++;
 	vector_insert(vect, 1, 10);
 	// assert length is 4
 	if(vect->length != 4) valid++;
@@ -52,5 +50,19 @@ void test_insert_vector(int* counter){
 		printf("set_vector did not work as expected.\n");
 		*counter += 1;
 	}
-	free(vect);
+}
+
+
+
+void test_vector_erase(int* counter, p_s_vector vect){
+	int valid = 1;
+	vector_erase(vect, 1);
+	// assert length is 3
+	if(vect->length != 3) valid++;
+	// assert it's all equal to 0 (reuse of first function)
+	test_vector_alloc(counter, vect);
+	if(valid!=1) {
+		printf("vector_erase did not work as expected.\n");
+		*counter += 1;
+	}
 }
