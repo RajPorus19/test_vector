@@ -38,6 +38,7 @@ void vector_erase(p_s_vector p_vector, size_t i){
   for(size_t j = i ; j < p_vector->length ; j++){
     p_vector->array[j] = p_vector->array[j+1];
   }
+  p_vector->array = (double*) realloc(p_vector->array, p_vector->length * sizeof(double));
 }
 
 void vector_push_back(p_s_vector p_vector, double v){

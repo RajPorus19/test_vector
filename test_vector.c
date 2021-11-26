@@ -6,15 +6,12 @@ void test_vector_alloc(int* counter, p_s_vector vect);
 void test_insert_vector(int* counter, p_s_vector vect);
 void test_vector_erase(int* counter, p_s_vector vect);
 void test_vector_set(int* counter, p_s_vector vect);
-
-// TODO
 void test_vector_push_back(int* counter, p_s_vector vect);
 void test_vector_pop_back(int* counter, p_s_vector vect);
-void test_vector_clear(p_s_vector p_vector);
-int test_vector_empty(p_s_vector p_vector);
-size_t test_vector_size(p_s_vector p_vector);
+void test_vector_clear(int* counter, p_s_vector vect);
+void test_vector_empty(int* counter, p_s_vector vect);
+void test_vector_size(int* counter, p_s_vector vect);
 
-// TODO void vector_set(p_s_vector p_vector, size_t i, double v);
 
 int main(void){
 	int counter = 0;
@@ -26,10 +23,13 @@ int main(void){
 	test_vector_set(&counter, vect);
 	test_vector_push_back(&counter, vect);
 	test_vector_pop_back(&counter, vect);
+	test_vector_clear(&counter, vect);
+	test_vector_empty(&counter, vect);
+	test_vector_size(&counter, vect);
 	// print result
 	if(counter==0) printf("All tests have passed successfuly ! :) \n");
 	else printf("%d tests have failed :(  \n",counter);
-	free(vect);
+	vector_free(vect);
 	return 0;
 };
 
@@ -136,6 +136,52 @@ void test_vector_pop_back(int* counter, p_s_vector vect){
 	if(vect->array[3]!= 100) valid++;
 	if(valid!=1) {
 		printf("vector_pop_back did not work as expected.\n");
+		*counter += 1;
+	}
+}
+
+void test_vector_clear(int* counter, p_s_vector vect){
+	int valid = 1;
+	// assert length is still 4
+	if(vect->length != 4) valid++;
+	vector_clear(vect);
+	// assert length is now 0
+	if(vect->length != 0) valid++;
+	if(valid!=1) {
+		printf("vector_clear did not work as expected.\n");
+		*counter += 1;
+	}
+}
+
+void test_vector_empty(int* counter, p_s_vector vect){
+	int valid = 1;
+	// assert length is still 0
+	if(vect->length != 0) valid++;
+
+	int check = vector_empty(vect);
+	// assert clear's result
+	if(check != 0) valid++;
+	vector_push_back(vect, 19);
+	check = vector_empty(vect);
+	// assert clear's result
+	if(check != 1) valid++;
+	// check pushed value
+	if(vect->array[0] != 19) valid++;
+	if(valid!=1) {
+		printf("vector_empty did not work as expected.\n");
+		*counter += 1;
+	}
+}
+
+void test_vector_size(int* counter, p_s_vector vect){
+	int valid = 1;
+	// assert length is still 0
+	if(vect->length != 1) valid++;
+	int check = vector_size(vect);
+	// assert clear's result
+	if(check != 1) valid++;
+	if(valid!=1) {
+		printf("vector_empty did not work as expected.\n");
 		*counter += 1;
 	}
 }

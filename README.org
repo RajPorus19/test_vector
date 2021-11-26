@@ -19,3 +19,11 @@ Dependencies :
 #+begin_src sh
 find . | entr sh -c "clear & make &"
 #+end_src
+
+* Run tests
+Dependencies :
+- make
+- valgrind
+#+begin_src sh
+make test
+#+end_src
