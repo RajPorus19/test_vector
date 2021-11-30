@@ -14,19 +14,21 @@ p_s_vector vector_alloc(size_t n){
 
 void vector_free(p_s_vector p_vector){
   free(p_vector->array);
-  p_vector->array = NULL;
+  // TODO REMOVE
+  //p_vector->array = NULL;
   free(p_vector);
-  p_vector = NULL;
+  //p_vector = NULL;
 }
 
 
 void vector_set(p_s_vector p_vector, size_t i, double v){
-  if(i < p_vector->length) p_vector->array[0] = v;
+  if(i < p_vector->length) p_vector->array[i] = v;
 }
 
 void vector_insert(p_s_vector p_vector, size_t i, double v){
+  if(i>p_vector->length - 1) return;
   p_vector->length++;
-  p_vector->array = (double*) realloc(p_vector->array, sizeof(s_vector) * p_vector->length);
+  p_vector->array = (double*) realloc(p_vector->array, sizeof(double) * p_vector->length);
   for(size_t j = p_vector->length - 1; j > i ; j--){
     p_vector->array[j] = p_vector->array[j-1];
   }
@@ -51,7 +53,6 @@ void vector_pop_back(p_s_vector p_vector){
   vector_erase(p_vector, p_vector->length - 1);
 }
 
-// TODO
 void vector_clear(p_s_vector p_vector){
   p_vector->length = 0;
   p_vector->array = (double*) realloc(p_vector->array, 0);

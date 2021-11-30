@@ -7,7 +7,6 @@ typedef struct struct_vector {
 } s_vector;
 typedef s_vector* p_s_vector;
 p_s_vector vector_alloc(size_t n);
-// TODO correct free
 void vector_free(p_s_vector p_vector);
 void vector_set(p_s_vector p_vector, size_t i, double v);
 void vector_insert(p_s_vector p_vector, size_t i, double v);
