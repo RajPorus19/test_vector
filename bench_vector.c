@@ -114,23 +114,7 @@ int main(int argc, char *argv[])
     size_t length;
     size_t n;
 
-    if (argc <= 3)
-    {
-        printf("array length\n");
-        scanf("%ld", &length);
-        printf("Tests number\n");
-        scanf("%ld", &n);
-
-        p_s_vector vector = vector_alloc(length);
-        insert_erase_random(vector, n);
-        insert_erase_head(vector, n);
-        insert_erase_tail(vector, n);
-        read_write_random(vector, n);
-        read_write_sequential(vector, n);
-        bubble_sort(vector, n);
-        vector_free(vector);
-    }
-    else
+    if (argc == 4)
     {
         length = atoi(argv[1]);
         n = atoi(argv[2]);
@@ -155,6 +139,35 @@ int main(int argc, char *argv[])
             bubble_sort(vector, n);
         else
             printf("Write a valid test name\n");
+        vector_free(vector);
+    }
+    else if (argc == 3)
+    {
+        length = atoi(argv[1]);
+        n = atoi(argv[2]);
+        p_s_vector vector = vector_alloc(length);
+        insert_erase_random(vector, n);
+        insert_erase_head(vector, n);
+        insert_erase_tail(vector, n);
+        read_write_random(vector, n);
+        read_write_sequential(vector, n);
+        bubble_sort(vector, n);
+        vector_free(vector);
+    }
+    else
+    {
+        printf("array length\n");
+        scanf("%ld", &length);
+        printf("Tests number\n");
+        scanf("%ld", &n);
+
+        p_s_vector vector = vector_alloc(length);
+        insert_erase_random(vector, n);
+        insert_erase_head(vector, n);
+        insert_erase_tail(vector, n);
+        read_write_random(vector, n);
+        read_write_sequential(vector, n);
+        bubble_sort(vector, n);
         vector_free(vector);
     }
 
