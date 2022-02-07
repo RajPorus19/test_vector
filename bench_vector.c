@@ -114,44 +114,49 @@ int main(int argc, char *argv[])
     size_t length;
     size_t n;
 
-    if (argc < 4)
+    if (argc <= 3)
     {
         printf("array length\n");
         scanf("%ld", &length);
         printf("Tests number\n");
         scanf("%ld", &n);
-        printf("Test name\n");
-        scanf("%s", &test_name[0]);
+
+        p_s_vector vector = vector_alloc(length);
+        insert_erase_random(vector, n);
+        insert_erase_head(vector, n);
+        insert_erase_tail(vector, n);
+        read_write_random(vector, n);
+        read_write_sequential(vector, n);
+        bubble_sort(vector, n);
+        vector_free(vector);
     }
     else
     {
         length = atoi(argv[1]);
         n = atoi(argv[2]);
         test_name = argv[3];
+        printf("Test name : %s\n", test_name);
+        printf("array length : %ld\n", length);
+        printf("Tests number : %ld\n", n);
+
+        p_s_vector vector = vector_alloc(length);
+
+        if (strcmp(test_name, "insert_erase_random") == 0)
+            insert_erase_random(vector, n);
+        else if (strcmp(test_name, "insert_erase_head") == 0)
+            insert_erase_head(vector, n);
+        else if (strcmp(test_name, "insert_erase_tail") == 0)
+            insert_erase_tail(vector, n);
+        else if (strcmp(test_name, "read_write_random") == 0)
+            read_write_random(vector, n);
+        else if (strcmp(test_name, "read_write_sequential") == 0)
+            read_write_sequential(vector, n);
+        else if (strcmp(test_name, "bubble_sort") == 0)
+            bubble_sort(vector, n);
+        else
+            printf("Write a valid test name\n");
+        vector_free(vector);
     }
-
-    printf("Test name : %s\n", test_name);
-    printf("array length : %ld\n", length);
-    printf("Tests number : %ld\n", n);
-
-    p_s_vector vector = vector_alloc(length);
-
-    if (strcmp(test_name, "insert_erase_random") == 0)
-        insert_erase_random(vector, n);
-    else if (strcmp(test_name, "insert_erase_head") == 0)
-        insert_erase_head(vector, n);
-    else if (strcmp(test_name, "insert_erase_tail") == 0)
-        insert_erase_tail(vector, n);
-    else if (strcmp(test_name, "read_write_random") == 0)
-        read_write_random(vector, n);
-    else if (strcmp(test_name, "read_write_sequential") == 0)
-        read_write_sequential(vector, n);
-    else if (strcmp(test_name, "bubble_sort") == 0)
-        bubble_sort(vector, n);
-    else
-        printf("Write a valid test name\n");
-
-    vector_free(vector);
 
     return 1;
 }
