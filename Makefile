@@ -26,4 +26,4 @@ bench_vector.o : bench_vector.c
 
 clean :
 	rm -f *.o
-	rm -f test_vector test_random
+	rm -f test_vector test_random bench_vector
