@@ -1,5 +1,5 @@
 # clean before recompiling everything
-all : main 
+all : clean main 
 	./test_random
 	./test_vector
 
