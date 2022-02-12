@@ -61,3 +61,4 @@ test_random
 bench_vector
 test_vector_v2
 bench_vector_v2
+test_my_struct
