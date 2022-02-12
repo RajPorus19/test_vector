@@ -2,6 +2,11 @@
 
 int main(int argc, char const *argv[])
 {
-    /* code */
+    p_s_my_struct my_struct = my_struct_alloc();
+
+    my_struct_randoms_init(my_struct);
+
+    my_struct_print(my_struct);
+
     return 0;
 }

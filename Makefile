@@ -12,7 +12,7 @@ main: test_vector.o test_random.o vector.o random.o bench_vector.o my_struct.o t
 	gcc vector.o test_vector.o -o test_vector
 	gcc random.o test_random.o -o test_random
 	gcc bench_vector.o vector.o random.o -g -o bench_vector
-	gcc my_struct.o test_my_struct.o -o test_my_struct
+	gcc my_struct.o test_my_struct.o random.o -o test_my_struct
 
 vector.o : vector.c vector.h
 	gcc vector.c -Wall -Wextra -c -o vector.o
