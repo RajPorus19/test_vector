@@ -3,33 +3,38 @@
 
 #include "vector.h"
 
-p_s_vector vector_alloc(size_t n)
+p_s_vector vector_alloc(size_t n, size_t size_of_data, t_data_default_init data_default_init, t_data_reset_to_init data_reset_to_init, t_data_cpy data_cpy)
 {
-  p_s_vector vector = malloc(sizeof(s_vector));
+  p_s_vector p_vector = malloc(sizeof(s_vector));
+  p_vector->data_cpy = data_cpy;
+  p_vector->data_default_init = data_default_init;
+  p_vector->data_reset_to_init = data_reset_to_init;
+  p_vector->length = n;
+  p_vector->size_of_data = size_of_data;
 
-  if (vector == NULL)
-    return vector;
+  if (p_vector == NULL)
+    return p_vector;
 
-  vector->length = n;
+  p_vector->length = n;
 #if V2
-  vector->capacity = n > 16 ? n + 8 - (n % 16) : 16;
-  vector->array = malloc(sizeof(double) * vector->capacity);
+  p_vector->capacity = n > 16 ? n + 8 - (n % 16) : 16;
+  p_vector->array = malloc(p_vector->size_of_data * p_vector->capacity);
 #else
-  vector->array = malloc(sizeof(double) * vector->length);
+  p_vector->array = malloc(p_vector->size_of_data * p_vector->length);
 #endif
 
   for (size_t i = 0; i < n; i++)
   {
-    vector->array[i] = 0.0;
+    p_vector->data_default_init(p_vector->array + i * p_vector->size_of_data);
   }
 
-  if (vector->array == NULL)
+  if (p_vector->array == NULL)
   {
-    free(vector);
-    vector = NULL;
+    free(p_vector);
+    p_vector = NULL;
   }
 
-  return vector;
+  return p_vector;
 }
 
 void vector_realloc(p_s_vector p_vector, size_t n)
@@ -39,66 +44,59 @@ void vector_realloc(p_s_vector p_vector, size_t n)
   if (p_vector->length >= p_vector->capacity)
   {
     p_vector->capacity *= 2;
-    n = sizeof(double) * p_vector->capacity;
+    n = p_vector->size_of_data * p_vector->capacity;
     p_vector->array = realloc(p_vector->array, n);
-    // printf("realloc\n");
   }
   else if (p_vector->length <= p_vector->capacity / 4)
   {
     p_vector->capacity /= 2;
-    n = sizeof(double) * p_vector->capacity;
+    n = p_vector->size_of_data * p_vector->capacity;
     p_vector->array = realloc(p_vector->array, n);
-    // printf("realloc\n");
   }
 #else
-  p_vector->array = realloc(p_vector->array, sizeof(double) * n);
-  // printf("realloc\n");
+  p_vector->array = realloc(p_vector->array, n);
 #endif
 }
 
 void vector_free(p_s_vector p_vector)
 {
+
+  for (size_t i = 0; i < p_vector->length; i++)
+  {
+    p_vector->data_reset_to_init(p_vector->array + i * p_vector->size_of_data);
+  }
+
   free(p_vector->array);
   free(p_vector);
 }
 
-void vector_print(p_s_vector p_vector)
-{
-  printf("[");
-  if (p_vector->length == 0)
-  {
-    printf("]\n");
-    return;
-  }
-  for (size_t i = 0; i < p_vector->length - 1; i++)
-    printf("%lf, ", p_vector->array[i]);
-  printf("%lf]\n", p_vector->array[p_vector->length - 1]);
-  printf("length : %ld\n", p_vector->length);
-#if V2
-  printf("capacity : %ld\n", p_vector->capacity);
-#endif
-}
-
-void vector_set(p_s_vector p_vector, size_t i, double v)
+void vector_set(p_s_vector p_vector, size_t i, void *v)
 {
   if (p_vector->length < i)
     return;
 
-  p_vector->array[i] = v;
+  p_vector->data_cpy(v, p_vector->array + i * p_vector->size_of_data);
 }
 
-void vector_insert(p_s_vector p_vector, size_t i, double v)
+void vector_get(p_s_vector p_vector, size_t i, void *v)
+{
+  if (p_vector->length < i)
+    return;
+  v = p_vector->array + i * p_vector->size_of_data;
+}
+
+void vector_insert(p_s_vector p_vector, size_t i, void *v)
 {
   if (p_vector->length < i)
     return;
 
   p_vector->length++;
-  vector_realloc(p_vector, sizeof(double) * p_vector->length);
+  vector_realloc(p_vector, p_vector->size_of_data * p_vector->length);
   for (size_t j = p_vector->length - 1; j > i; j--)
   {
-    p_vector->array[j] = p_vector->array[j - 1];
+    p_vector->data_cpy(p_vector->array + (j - 1) * p_vector->size_of_data, p_vector->array + j * p_vector->size_of_data);
   }
-  p_vector->array[i] = v;
+  p_vector->data_cpy(v, p_vector->array + i * p_vector->size_of_data);
 }
 
 void vector_erase(p_s_vector p_vector, size_t i)
@@ -109,16 +107,16 @@ void vector_erase(p_s_vector p_vector, size_t i)
   p_vector->length--;
   for (size_t j = i; j < p_vector->length; j++)
   {
-    p_vector->array[j] = p_vector->array[j + 1];
+    p_vector->data_cpy(p_vector->array + (j - 1) * p_vector->size_of_data, p_vector->array + j * p_vector->size_of_data);
   }
   vector_realloc(p_vector, sizeof(double) * p_vector->length);
 }
 
-void vector_push_back(p_s_vector p_vector, double v)
+void vector_push_back(p_s_vector p_vector, void *v)
 {
   p_vector->length++;
-  p_vector->array = (double *)realloc(p_vector->array, sizeof(s_vector) * p_vector->length);
-  p_vector->array[p_vector->length - 1] = v;
+  vector_realloc(p_vector, p_vector->size_of_data * p_vector->length);
+  p_vector->data_cpy(v, p_vector->array + (p_vector->length - 1) * p_vector->size_of_data);
 }
 
 void vector_pop_back(p_s_vector p_vector)
@@ -129,7 +127,7 @@ void vector_pop_back(p_s_vector p_vector)
 void vector_clear(p_s_vector p_vector)
 {
   p_vector->length = 0;
-  vector_realloc(p_vector, sizeof(double) * p_vector->length);
+  vector_realloc(p_vector, p_vector->size_of_data * p_vector->length);
 }
 
 int vector_empty(p_s_vector p_vector)
