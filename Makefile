@@ -7,6 +7,7 @@ test:
 	make
 	valgrind ./test_random
 	valgrind ./test_vector
+	valgrind ./test_my_struct
 
 main: test_vector.o test_random.o vector.o random.o bench_vector.o my_struct.o test_my_struct.o
 	gcc vector.o test_vector.o -o test_vector
