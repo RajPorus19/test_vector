@@ -41,6 +41,11 @@ void test_vector_alloc(int *counter, p_s_vector vect)
 	// assert length is 3
 	if (vect->length != 3)
 		valid++;
+#if V2
+	if (vect->capacity != 16)
+		valid++;
+#endif
+
 	// assert all the doubles are equal to zero
 	for (size_t i = 0; i < vect->length; i++)
 	{

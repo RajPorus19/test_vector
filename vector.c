@@ -11,7 +11,13 @@ p_s_vector vector_alloc(size_t n)
     return vector;
 
   vector->length = n;
+
+#if V2
+  vector->capacity = n > 16 ? n + 8 - (n % 16) : 16;
+  vector->array = malloc(sizeof(double) * vector->capacity);
+#else
   vector->array = malloc(sizeof(double) * vector->length);
+#endif
 
   for (size_t i = 0; i < n; i++)
   {
@@ -29,7 +35,22 @@ p_s_vector vector_alloc(size_t n)
 
 void vector_realloc(p_s_vector p_vector, size_t n)
 {
-  p_vector->array = realloc(p_vector->array, sizeof(double) * n);
+#if V2
+  if (p_vector->length >= p_vector->capacity)
+  {
+    p_vector->capacity *= 2;
+    n = sizeof(double) * p_vector->capacity;
+    p_vector->array = realloc(p_vector->array, n);
+  }
+  else if (p_vector->length <= p_vector->capacity / 4 && p_vector->capacity / 2 >= 16)
+  {
+    p_vector->capacity /= 2;
+    n = sizeof(double) * p_vector->capacity;
+    p_vector->array = realloc(p_vector->array, n);
+  }
+#else
+  p_vector->array = realloc(p_vector->array, n);
+#endif
 }
 
 void vector_free(p_s_vector p_vector)
@@ -50,6 +71,9 @@ void vector_print(p_s_vector p_vector)
     printf("%lf, ", p_vector->array[i]);
   printf("%lf]\n", p_vector->array[p_vector->length - 1]);
   printf("length : %ld\n", p_vector->length);
+#if V2
+  printf("capacity : %ld\n", p_vector->capacity);
+#endif
 }
 
 void vector_set(p_s_vector p_vector, size_t i, double v)
