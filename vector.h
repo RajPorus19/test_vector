@@ -19,6 +19,7 @@ void vector_realloc(p_s_vector p_vector, size_t n);
 void vector_free(p_s_vector p_vector);
 void vector_print(p_s_vector p_vector);
 void vector_set(p_s_vector p_vector, size_t i, double v);
+double vector_get(p_s_vector p_vector, size_t i);
 void vector_insert(p_s_vector p_vector, size_t i, double v);
 void vector_erase(p_s_vector p_vector, size_t i);
 void vector_push_back(p_s_vector p_vector, double v);

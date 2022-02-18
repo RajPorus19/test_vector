@@ -11,12 +11,7 @@ p_s_vector vector_alloc(size_t n)
     return vector;
 
   vector->length = n;
-#if V2
-  vector->capacity = n > 16 ? n + 8 - (n % 16) : 16;
-  vector->array = malloc(sizeof(double) * vector->capacity);
-#else
   vector->array = malloc(sizeof(double) * vector->length);
-#endif
 
   for (size_t i = 0; i < n; i++)
   {
@@ -34,26 +29,7 @@ p_s_vector vector_alloc(size_t n)
 
 void vector_realloc(p_s_vector p_vector, size_t n)
 {
-
-#if V2
-  if (p_vector->length >= p_vector->capacity)
-  {
-    p_vector->capacity *= 2;
-    n = sizeof(double) * p_vector->capacity;
-    p_vector->array = realloc(p_vector->array, n);
-    // printf("realloc\n");
-  }
-  else if (p_vector->length <= p_vector->capacity / 4)
-  {
-    p_vector->capacity /= 2;
-    n = sizeof(double) * p_vector->capacity;
-    p_vector->array = realloc(p_vector->array, n);
-    // printf("realloc\n");
-  }
-#else
   p_vector->array = realloc(p_vector->array, sizeof(double) * n);
-  // printf("realloc\n");
-#endif
 }
 
 void vector_free(p_s_vector p_vector)
@@ -74,9 +50,6 @@ void vector_print(p_s_vector p_vector)
     printf("%lf, ", p_vector->array[i]);
   printf("%lf]\n", p_vector->array[p_vector->length - 1]);
   printf("length : %ld\n", p_vector->length);
-#if V2
-  printf("capacity : %ld\n", p_vector->capacity);
-#endif
 }
 
 void vector_set(p_s_vector p_vector, size_t i, double v)
@@ -85,6 +58,14 @@ void vector_set(p_s_vector p_vector, size_t i, double v)
     return;
 
   p_vector->array[i] = v;
+}
+
+double vector_get(p_s_vector p_vector, size_t i)
+{
+  if (p_vector->length < i)
+    return 0;
+
+  return p_vector->array[i];
 }
 
 void vector_insert(p_s_vector p_vector, size_t i, double v)
@@ -114,9 +95,10 @@ void vector_erase(p_s_vector p_vector, size_t i)
   vector_realloc(p_vector, sizeof(double) * p_vector->length);
 }
 
-void vector_push_back(p_s_vector p_vector, double v){
+void vector_push_back(p_s_vector p_vector, double v)
+{
   p_vector->length++;
-  p_vector->array = (double*) realloc(p_vector->array, sizeof(s_vector) * p_vector->length);
+  p_vector->array = (double *)realloc(p_vector->array, sizeof(s_vector) * p_vector->length);
   p_vector->array[p_vector->length - 1] = v;
 }
 
@@ -133,7 +115,7 @@ void vector_clear(p_s_vector p_vector)
 
 int vector_empty(p_s_vector p_vector)
 {
-  return p_vector->length == 0 ? 0 : 1;
+  return p_vector->length == 0 ? 1 : 0;
 }
 
 size_t vector_size(p_s_vector p_vector)
