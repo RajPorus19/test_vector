@@ -6,114 +6,86 @@
 
 void insert_erase_random(p_s_vector p_vector, size_t n)
 {
-    printf("Inserting and removing %ld values randomly\n", n);
     for (size_t i = 0; i < n; i++)
     {
         size_t position = random_size_t(0, p_vector->length - 1);
-        void * value = random_double(-10, 10);
-        // printf("%ld : insert %f at position %ld\n", i, value, position);
+        double value = random_double(-10, 10);
         vector_insert(p_vector, position, value);
-        // vector_print(p_vector);
     }
     for (size_t i = 0; i < n; i++)
     {
         size_t position = random_size_t(0, p_vector->length - 1);
-        // printf("%ld : remove at position %ld\n", i, position);
         vector_erase(p_vector, position);
-        // vector_print(p_vector);
     }
 }
 
 void insert_erase_head(p_s_vector p_vector, size_t n)
 {
-    printf("Inserting and removing %ld values in head of list\n", n);
     for (size_t i = 0; i < n; i++)
     {
         size_t position = 0;
-        void * value = random_double(-10, 10);
-        printf("%ld :  array[%ld] = %f\n", i, position, value);
+        double value = random_double(-10, 10);
         vector_insert(p_vector, position, value);
-        vector_print(p_vector);
         vector_erase(p_vector, position);
-        vector_print(p_vector);
     }
 }
 
 void insert_erase_tail(p_s_vector p_vector, size_t n)
 {
-    printf("Inserting and removing %ld values in tail of list\n", n);
     for (size_t i = 0; i < n; i++)
     {
-        size_t position = p_vector->length - 1;
-        void * value = random_double(-10, 10);
-        printf("%ld :  array[%ld] = %f\n", i, position, value);
+        double value = random_double(-10, 10);
         vector_push_back(p_vector, value);
-        vector_print(p_vector);
         vector_pop_back(p_vector);
-        vector_print(p_vector);
     }
 }
 
 void read_write_random(p_s_vector p_vector, size_t n)
 {
-    printf("Read and write %ld values randomly\n", n);
     for (size_t i = 0; i < n; i++)
     {
         size_t position = random_size_t(0, p_vector->length - 1);
-        void * value = random_double(-10, 10);
-        printf("%ld :  array[%ld] = %f\n", i, position, value);
+        double value = random_double(-10, 10);
         vector_set(p_vector, position, value);
-        vector_print(p_vector);
     }
 }
 
 void read_write_sequential(p_s_vector p_vector, size_t n)
 {
-    printf("Read and write %ld times all values of array\n", n);
     for (size_t i = 0; i < n; i++)
     {
         for (size_t pos = 0; pos < p_vector->length; pos++)
         {
-            void * value = random_double(-10, 10);
-            printf("%ld :  array[%ld] = %f\n", i, pos, value);
+            double value = random_double(-10, 10);
             vector_set(p_vector, pos, value);
         }
-        vector_print(p_vector);
     }
 }
 
 void bubble_sort(p_s_vector p_vector, size_t n)
 {
-    printf("Write all values of array and sort %ld times\n", n);
     for (size_t a = 0; a < n; a++)
     {
         read_write_sequential(p_vector, 1);
 
-        void *tmp = 0;
+        double tmp = 0;
         for (size_t i = p_vector->length - 1; i > 0; i--)
         {
             for (size_t j = 0; j < i; j++)
             {
-                void *current;
-                void *next;
-                vector_get(p_vector, j, current);
-                vector_get(p_vector, j + 1, next);
-                if (next < current)
+                if (p_vector->array[j + 1] < p_vector->array[j])
                 {
-                    vector_get(p_vector, j + 1, tmp);
-                    vector_set(p_vector, j + 1, current);
-                    vector_set(p_vector, j, tmp);
+                    tmp = p_vector->array[j + 1];
+                    p_vector->array[j + 1] = p_vector->array[j];
+                    p_vector->array[j] = tmp;
                 }
             }
         }
-        vector_print(p_vector);
     }
 }
 
 int main(int argc, char *argv[])
 {
-    printf("BENCH VECTOR\n");
-
     char *test_name = "";
     size_t length;
     size_t n;

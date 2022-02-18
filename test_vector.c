@@ -41,6 +41,11 @@ void test_vector_alloc(int *counter, p_s_vector vect)
 	// assert length is 3
 	if (vect->length != 3)
 		valid++;
+#if V2
+	if (vect->capacity != 16)
+		valid++;
+#endif
+
 	// assert all the doubles are equal to zero
 	for (size_t i = 0; i < vect->length; i++)
 	{
@@ -202,12 +207,12 @@ void test_vector_empty(int *counter, p_s_vector vect)
 
 	int check = vector_empty(vect);
 	// assert clear's result
-	if (check != 0)
+	if (check != 1)
 		valid++;
 	vector_push_back(vect, 19);
 	check = vector_empty(vect);
 	// assert clear's result
-	if (check != 1)
+	if (check != 0)
 		valid++;
 	// check pushed value
 	if (vect->array[0] != 19)

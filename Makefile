@@ -1,37 +1,58 @@
 # clean before recompiling everything
-all : clean main 
-	./test_random
+main: clean test_vector test_random bench_vector test_vector_v2 bench_vector_v2
+
+all : main
 	./test_vector
+	./test_random
+	./bench_vector 10 10
+	./test_vector_v2
+	./bench_vector_v2 10 10
 
-test:
-	make
-	valgrind ./test_random
+test: main
 	valgrind ./test_vector
-	valgrind ./test_my_struct
+	valgrind ./test_random
+	valgrind ./test_vector_v2
 
-main: test_vector.o test_random.o vector.o random.o bench_vector.o my_struct.o test_my_struct.o
-	gcc vector.o test_vector.o -o test_vector
-	gcc random.o test_random.o -o test_random
-	gcc bench_vector.o vector.o random.o -g -o bench_vector
-	gcc my_struct.o test_my_struct.o random.o -o test_my_struct
-
-vector.o : vector.c vector.h
-	gcc vector.c -Wall -Wextra -c -o vector.o
-random.o : random.c random.h
-	gcc random.c -Wall -Wextra -c -o random.o
-my_struct.o : my_struct.c my_struct.h
-	gcc my_struct.c -Wall -Wextra -c -o my_struct.o
-
-test_vector.o :
-	gcc test_vector.c -Wall -Wextra -c -o test_vector.o
-test_random.o :
-	gcc test_random.c -Wall -Wextra -c -o test_random.o
-test_my_struct.o :
-	gcc test_my_struct.c -Wall -Wextra -c -o test_my_struct.o
-
-bench_vector.o : bench_vector.c
-	gcc -Wall -Wextra -g -c bench_vector.c
+bench: main
+	time valgrind ./bench_vector 10 10
 
 clean :
 	rm -f *.o
-	rm -f test_vector test_random bench_vector test_my_struct
+	rm -f test_vector test_random bench_vector
+	rm -f test_vector_v2 bench_vector_v2
+
+# vector
+vector.o : vector.c vector.h
+	gcc vector.c -Wall -Wextra -c -o vector.o
+test_vector.o :
+	gcc test_vector.c -Wall -Wextra -c -o test_vector.o
+test_vector: test_vector.o vector.o
+	gcc vector.o test_vector.o -o test_vector
+
+# random
+random.o : random.c random.h
+	gcc random.c -Wall -Wextra -c -o random.o
+test_random.o :
+	gcc test_random.c -Wall -Wextra -c -o test_random.o
+test_random: test_random.o random.o
+	gcc random.o test_random.o -o test_random
+
+# bench_vector
+bench_vector.o : bench_vector.c
+	gcc -Wall -Wextra -g -c bench_vector.c
+bench_vector : bench_vector.o vector.o random.o
+	gcc bench_vector.o vector.o random.o -g -o bench_vector
+
+# vector_v2
+vector_v2.o : vector.c vector.h
+	gcc -Wall -Wextra -g -c vector.c -D V2 -o vector_v2.o
+test_vector_v2.o : test_vector.c
+	gcc -Wall -Wextra -g -c test_vector.c -D V2 -o test_vector_v2.o
+test_vector_v2 : test_vector_v2.o vector_v2.o
+	gcc test_vector_v2.o vector_v2.o -g -o test_vector_v2
+
+# bench_vector_v2
+bench_vector_v2.o : bench_vector.c
+	gcc -Wall -Wextra -g -c bench_vector.c -D V2 -o bench_vector_v2.o
+bench_vector_v2 : bench_vector_v2.o vector_v2.o random.o
+	gcc bench_vector_v2.o vector_v2.o random.o -g -o bench_vector_v2
