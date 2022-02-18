@@ -98,7 +98,7 @@ void vector_erase(p_s_vector p_vector, size_t i)
 void vector_push_back(p_s_vector p_vector, double v)
 {
   p_vector->length++;
-  p_vector->array = (double *)realloc(p_vector->array, sizeof(s_vector) * p_vector->length);
+  vector_realloc(p_vector, sizeof(double) * p_vector->length);
   p_vector->array[p_vector->length - 1] = v;
 }
 
