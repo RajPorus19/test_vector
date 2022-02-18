@@ -1,13 +1,17 @@
 # clean before recompiling everything
-main: clean test_vector test_random bench_vector
+main: clean test_vector test_random bench_vector test_vector_v2 bench_vector_v2
 
 all : main
 	./test_vector
 	./test_random
+	./bench_vector 10 10
+	./test_vector_v2
+	./bench_vector_v2 10 10
 
 test: main
 	valgrind ./test_vector
 	valgrind ./test_random
+	valgrind ./test_vector_v2
 
 bench: main
 	time valgrind ./bench_vector 10 10
