@@ -19,8 +19,8 @@ void my_struct_default_init(p_s_my_struct p_vector)
 void my_struct_randoms_init(p_s_my_struct p_vector)
 {
     p_vector->number = random_double(-10, 10);
-    size_t text_size = random_int(1, 10);
-    p_vector->text = malloc(sizeof(char) * text_size);
+    size_t text_size = random_size_t(1, 10);
+    p_vector->text = malloc(sizeof(unsigned char) * text_size);
     random_init_string(p_vector->text, text_size);
 }
 void my_struct_reset_to_default(p_s_my_struct p_vector)
@@ -60,5 +60,5 @@ int my_struct_cmp(p_s_my_struct p_vector_a, p_s_my_struct p_vector_b)
 void my_struct_print(p_s_my_struct p_vector)
 {
     printf("%f\n", p_vector->number);
-    //printf("%s\n", p_vector->text);
+    printf("%s\n", p_vector->text);
 }
