@@ -15,6 +15,7 @@ test: main
 
 bench: main
 	time valgrind ./bench_vector 10 10
+	time valgrind ./bench_vector_v2 10 10
 
 clean :
 	rm -f *.o
