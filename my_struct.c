@@ -1,5 +1,5 @@
-#include "my_struct.h"
 #include "random.h"
+#include "my_struct.h"
 
 p_s_my_struct my_struct_alloc()
 {
@@ -19,7 +19,7 @@ void my_struct_default_init(p_s_my_struct p_vector)
 void my_struct_randoms_init(p_s_my_struct p_vector)
 {
     p_vector->number = random_double(-10, 10);
-    size_t text_size = random_int(-10, 10);
+    size_t text_size = random_int(1, 10);
     p_vector->text = malloc(sizeof(char) * text_size);
     random_init_string(p_vector->text, text_size);
 }
@@ -36,18 +36,14 @@ void my_struct_copy(p_s_my_struct p_dest, p_s_my_struct p_src)
 {
     p_dest->number = p_src->number;
     p_dest->text = realloc(p_dest->text, sizeof(p_src->text));
-    for (size_t i = 0; p_src->text[i] != "\0"; i++)
+    for (size_t i = 0; p_src->text[i] != '\0'; i++)
     {
         p_dest->text[i] = p_src->text[i];
     }
 }
 int my_struct_cmp(p_s_my_struct p_vector_a, p_s_my_struct p_vector_b)
 {
-    if (p_vector_a->number == p_vector_b->number)
-    {
-        return 0;
-    }
-    else if (p_vector_a->number < p_vector_b->number)
+    if (p_vector_a->number < p_vector_b->number)
     {
         return 1;
     }
@@ -55,10 +51,14 @@ int my_struct_cmp(p_s_my_struct p_vector_a, p_s_my_struct p_vector_b)
     {
         return -1;
     }
+    else
+    {
+        return 0;
+    }
 }
 
 void my_struct_print(p_s_my_struct p_vector)
 {
-    printf("%d\n", p_vector->number);
-    printf("%s\n", p_vector->text);
+    printf("%f\n", p_vector->number);
+    //printf("%s\n", p_vector->text);
 }

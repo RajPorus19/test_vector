@@ -1,5 +1,5 @@
 # clean before recompiling everything
-main: clean test_vector test_random bench_vector test_vector_v2 bench_vector_v2
+main: clean test_vector test_random bench_vector test_vector_v2 bench_vector_v2 test_my_struct
 
 all : main
 	./test_vector
@@ -7,19 +7,23 @@ all : main
 	./bench_vector 10 10
 	./test_vector_v2
 	./bench_vector_v2 10 10
+	./test_my_struct
 
 test: main
 	valgrind ./test_vector
 	valgrind ./test_random
 	valgrind ./test_vector_v2
+	valgrind ./test_my_struct
 
 bench: main
 	time valgrind ./bench_vector 10 10
+	time valgrind ./bench_vector_v2 10 10
 
 clean :
 	rm -f *.o
 	rm -f test_vector test_random bench_vector
 	rm -f test_vector_v2 bench_vector_v2
+	rm -f test_my_struct
 
 # vector
 vector.o : vector.c vector.h
@@ -56,3 +60,11 @@ bench_vector_v2.o : bench_vector.c
 	gcc -Wall -Wextra -g -c bench_vector.c -D V2 -o bench_vector_v2.o
 bench_vector_v2 : bench_vector_v2.o vector_v2.o random.o
 	gcc bench_vector_v2.o vector_v2.o random.o -g -o bench_vector_v2
+
+# my_struct
+my_struct.o : my_struct.c my_struct.h
+	gcc my_struct.c -Wall -Wextra -c -o my_struct.o
+test_my_struct.o :
+	gcc test_my_struct.c -Wall -Wextra -c -o test_my_struct.o
+test_my_struct: test_my_struct.o my_struct.o random.o
+	gcc my_struct.o test_my_struct.o random.o -o test_my_struct

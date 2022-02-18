@@ -6,7 +6,7 @@
 
 typedef struct struct_my_struct
 {
-    char *text;
+    unsigned char *text;
     double number;
 } s_my_struct;
 
