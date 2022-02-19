@@ -57,7 +57,7 @@ int test_random_uchar(unsigned char a, unsigned char b){
 
 int test_random_string(size_t n){
     int fails = 0;
-    unsigned char * c =  malloc(n * sizeof(unsigned char));
+    unsigned char * c =  malloc(n * sizeof(unsigned char) + 1);
     random_init_string(c,n);
     for(size_t i = 0; i<n; i++){
       if( 'A' > c[i] && c[i] > 'Z') fails++;
