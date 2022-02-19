@@ -38,5 +38,5 @@ void random_init_string(unsigned char *c, size_t n)
   {
     c[i] = random_uchar('A', 'Z');
   }
-  c[n] = '\0';
+  c[n - 1] = '\0';
 }
