@@ -7,9 +7,6 @@ typedef struct struct_vector
 {
     size_t length;
     double *array;
-#if V2
-    size_t capacity;
-#endif
 } s_vector;
 
 typedef s_vector *p_s_vector;
