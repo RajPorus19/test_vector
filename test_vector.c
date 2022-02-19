@@ -11,7 +11,6 @@ void test_vector_pop_back(int *counter, p_s_vector vect);
 void test_vector_clear(int *counter, p_s_vector vect);
 void test_vector_empty(int *counter, p_s_vector vect);
 void test_vector_size(int *counter, p_s_vector vect);
-void test_vector_get(int *counter, p_s_vector vect);
 
 int main(void)
 {
@@ -27,7 +26,6 @@ int main(void)
 	test_vector_clear(&counter, vect);
 	test_vector_empty(&counter, vect);
 	test_vector_size(&counter, vect);
-	test_vector_get(&counter, vect);
 	// print result
 	if (counter == 0)
 		printf("All tests have passed successfuly ! :) \n");
@@ -241,12 +239,4 @@ void test_vector_size(int *counter, p_s_vector vect)
 		printf("vector_empty did not work as expected.\n");
 		*counter += 1;
 	}
-}
-
-void test_vector_get(int *counter, p_s_vector vect){
-    double num = vector_get(vect,0);
-    if(num != 19){
-        *counter += 1;
-		printf("vector_get did not work as expected.\n");
-    }
 }
