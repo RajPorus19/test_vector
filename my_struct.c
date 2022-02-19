@@ -18,10 +18,10 @@ void my_struct_default_init(p_s_my_struct p_vector)
 }
 void my_struct_randoms_init(p_s_my_struct p_vector)
 {
-    p_vector->number = random_double(-10, 10);
     size_t text_size = random_size_t(1, 10);
-    p_vector->text = malloc(sizeof(unsigned char) * text_size);
+    p_vector->text = malloc(sizeof(unsigned char) * text_size + 1);
     random_init_string(p_vector->text, text_size);
+    p_vector->number = random_double(1, 100);
 }
 void my_struct_reset_to_default(p_s_my_struct p_vector)
 {
