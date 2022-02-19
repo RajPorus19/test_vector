@@ -5,7 +5,8 @@
 
 typedef void *(*t_data_default_init)();
 typedef void (*t_data_reset_to_init)(void *p_data);
-typedef void (*t_data_cpy)(void *p_data_dst, void *p_data_src);
+typedef void (*t_data_cpy)(void *p_data_src, void *p_data_dst);
+typedef void *(*t_data_print)();
 
 typedef struct struct_vector
 {
@@ -18,13 +19,14 @@ typedef struct struct_vector
     t_data_default_init data_default_init;
     t_data_reset_to_init data_reset_to_init;
     t_data_cpy data_cpy;
+    t_data_print data_print;
     size_t size_of_data;
 
 } s_vector;
 
 typedef s_vector *p_s_vector;
 
-p_s_vector vector_alloc(size_t n, size_t size_of_data, t_data_default_init data_default_init, t_data_reset_to_init data_reset_to_init, t_data_cpy data_cpy);
+p_s_vector vector_alloc(size_t n, size_t size_of_data, t_data_default_init data_default_init, t_data_reset_to_init data_reset_to_init, t_data_cpy data_cpy, t_data_print data_print);
 void vector_realloc(p_s_vector p_vector, size_t n);
 void vector_free(p_s_vector p_vector);
 void vector_print(p_s_vector p_vector);

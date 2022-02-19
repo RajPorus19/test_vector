@@ -3,7 +3,7 @@
 
 #include "vector.h"
 
-p_s_vector vector_alloc(size_t n, size_t size_of_data, t_data_default_init data_default_init, t_data_reset_to_init data_reset_to_init, t_data_cpy data_cpy)
+p_s_vector vector_alloc(size_t n, size_t size_of_data, t_data_default_init data_default_init, t_data_reset_to_init data_reset_to_init, t_data_cpy data_cpy, t_data_print data_print)
 {
   p_s_vector p_vector = malloc(sizeof(s_vector));
 
@@ -15,7 +15,8 @@ p_s_vector vector_alloc(size_t n, size_t size_of_data, t_data_default_init data_
   p_vector->size_of_data = size_of_data;
   p_vector->data_default_init = data_default_init;
   p_vector->data_reset_to_init = data_reset_to_init;
-  p_vector->data_cpy;
+  p_vector->data_cpy = data_cpy;
+  p_vector->data_print = data_print;
 
 #if V2
   p_vector->capacity = n > 16 ? n + 8 - (n % 16) : 16;
@@ -70,19 +71,20 @@ void vector_free(p_s_vector p_vector)
 
 void vector_print(p_s_vector p_vector)
 {
-  //   printf("[");
-  //   if (p_vector->length == 0)
-  //   {
-  //     printf("]\n");
-  //     return;
-  //   }
-  //   for (size_t i = 0; i < p_vector->length - 1; i++)
-  //     printf("%lf, ", p_vector->array[i]);
-  //   printf("%lf]\n", p_vector->array[p_vector->length - 1]);
-  //   printf("length : %ld\n", p_vector->length);
-  // #if V2
-  //   printf("capacity : %ld\n", p_vector->capacity);
-  // #endif
+  printf("[");
+  if (p_vector->length == 0)
+  {
+    printf("]\n");
+    return;
+  }
+  for (size_t i = 0; i < p_vector->length - 1; i++)
+    p_vector->data_print(p_vector->array + i * p_vector->size_of_data);
+  p_vector->data_print(p_vector->array + (p_vector->length - 1) * p_vector->size_of_data);
+  printf("]\n");
+  printf("length : %ld\n", p_vector->length);
+#if V2
+  printf("capacity : %ld\n", p_vector->capacity);
+#endif
 }
 
 void vector_set(p_s_vector p_vector, size_t i, void *v)
@@ -96,7 +98,7 @@ void vector_set(p_s_vector p_vector, size_t i, void *v)
 void vector_get(p_s_vector p_vector, size_t i, void *v)
 {
   if (p_vector->length < i)
-    return 0;
+    return;
 
   p_vector->data_cpy(p_vector->array + i * p_vector->size_of_data, v);
 }

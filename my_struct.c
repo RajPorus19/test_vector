@@ -10,6 +10,7 @@ void my_struct_free(p_s_my_struct p_vector)
 {
     free(p_vector->text);
     free(p_vector);
+    p_vector = NULL;
 }
 void my_struct_default_init(p_s_my_struct p_vector)
 {
@@ -27,8 +28,8 @@ void my_struct_reset_to_default(p_s_my_struct p_vector)
 {
     if (p_vector->text != NULL)
     {
-        free(p_vector->text);
         p_vector->text = NULL;
+        free(p_vector->text);
     }
     p_vector->number = 0;
 }

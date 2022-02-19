@@ -30,8 +30,8 @@ vector.o : vector.c vector.h
 	gcc vector.c -Wall -Wextra -c -o vector.o
 test_vector.o :
 	gcc test_vector.c -Wall -Wextra -c -o test_vector.o
-test_vector: test_vector.o vector.o
-	gcc vector.o test_vector.o -o test_vector
+test_vector: test_vector.o vector.o my_struct.o random.o
+	gcc vector.o test_vector.o my_struct.o random.o -o test_vector
 
 # random
 random.o : random.c random.h
