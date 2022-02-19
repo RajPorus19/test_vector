@@ -32,7 +32,7 @@ void my_struct_reset_to_default(p_s_my_struct p_vector)
     }
     p_vector->number = 0;
 }
-void my_struct_copy(p_s_my_struct p_dest, p_s_my_struct p_src)
+void my_struct_copy(p_s_my_struct p_src, p_s_my_struct p_dest)
 {
     p_dest->number = p_src->number;
     p_dest->text = realloc(p_dest->text, sizeof(p_src->text));
