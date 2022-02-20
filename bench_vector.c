@@ -157,5 +157,5 @@ int main(int argc, char *argv[])
         vector_free(vector);
     }
 
-    return 1;
+    return 0;
 }
