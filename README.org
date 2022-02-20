@@ -1,5 +1,5 @@
 #+TITLE: test_vector
-#+AUTHOR: HIRUTHAYARAJ Raj Porus
+#+AUTHOR: HIRUTHAYARAJ Raj Porus & JUQUEL Antonin
 
 This is a school homework.
 
