@@ -3,10 +3,10 @@
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
 
-typedef void *(*t_data_default_init)();
+typedef void (*t_data_default_init)(void *p_data);
 typedef void (*t_data_reset_to_init)(void *p_data);
 typedef void (*t_data_cpy)(void *p_data_src, void *p_data_dst);
-typedef void *(*t_data_print)();
+typedef void (*t_data_print)(void *p_data);
 
 typedef struct struct_vector
 {
