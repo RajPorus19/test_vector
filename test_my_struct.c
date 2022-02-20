@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <string.h>
 #include "my_struct.h"
 
 int test_my_struct_alloc();
@@ -74,7 +76,7 @@ int test_my_struct_randoms_init(p_s_my_struct my_struct)
 int test_my_struct_copy(p_s_my_struct p_src, p_s_my_struct p_dest)
 {
     my_struct_copy(p_src, p_dest);
-    if (p_src->number != p_dest->number)
+    if (p_src->number != p_dest->number || strcmp((char *)p_src->text, (char *)p_dest->text) != 0)
     {
         return 1;
     }

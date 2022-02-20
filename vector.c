@@ -123,6 +123,7 @@ void vector_erase(p_s_vector p_vector, size_t i)
     return;
 
   p_vector->length--;
+  p_vector->data_reset_to_init(p_vector->array + i * p_vector->size_of_data);
   for (size_t j = i; j < p_vector->length; j++)
   {
     vector_set(p_vector, j, p_vector->array + (j + 1) * p_vector->size_of_data);

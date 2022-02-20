@@ -52,7 +52,7 @@ void my_struct_copy(p_s_my_struct p_src, p_s_my_struct p_dest)
     }
     else
     {
-        p_dest->text = malloc(sizeof(p_src->text));
+        p_dest->text = realloc(p_dest->text, sizeof(p_src->text));
         strcpy((char *)p_dest->text, (char *)p_src->text);
     }
 }
