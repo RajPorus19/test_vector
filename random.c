@@ -34,9 +34,9 @@ unsigned char random_uchar(unsigned char a, unsigned char b)
 
 void random_init_string(unsigned char *c, size_t n)
 {
-  for (size_t i = 0; i < n; i++)
+  for (size_t i = 0; i < n - 1; i++)
   {
-    c[i] = random_uchar('A', 'Z');
+    c[i] = random_uchar('A', 'Z' + 1);
   }
   c[n - 1] = '\0';
 }

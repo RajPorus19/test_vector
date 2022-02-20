@@ -45,13 +45,13 @@ void vector_realloc(p_s_vector p_vector, size_t n)
   if (p_vector->length >= p_vector->capacity)
   {
     p_vector->capacity *= 2;
-    n = vector->size_of_data * p_vector->capacity;
+    n = p_vector->size_of_data * p_vector->capacity;
     p_vector->array = realloc(p_vector->array, n);
   }
   else if (p_vector->length <= p_vector->capacity / 4 && p_vector->capacity / 2 >= 16)
   {
     p_vector->capacity /= 2;
-    n = vector->size_of_data * p_vector->capacity;
+    n = p_vector->size_of_data * p_vector->capacity;
     p_vector->array = realloc(p_vector->array, n);
   }
 #else
