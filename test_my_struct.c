@@ -22,7 +22,7 @@ int main(void)
     p_s_my_struct my_struct_dest = my_struct_alloc();
 
     errors += test_my_struct_copy(my_struct, my_struct_dest);
-    errors += test_my_struct_cmp(my_struct,my_struct_dest);
+    errors += test_my_struct_cmp(my_struct, my_struct_dest);
     errors += test_my_struct_reset_to_default(my_struct);
 
     my_struct_free(my_struct_dest);
@@ -31,7 +31,8 @@ int main(void)
     {
         printf("%d errors :c", errors);
     }
-    else{
+    else
+    {
         printf("All tests passed :)\n");
     }
 
@@ -80,18 +81,22 @@ int test_my_struct_copy(p_s_my_struct p_src, p_s_my_struct p_dest)
     return 0;
 }
 
-int test_my_struct_reset_to_default(p_s_my_struct my_struct){
+int test_my_struct_reset_to_default(p_s_my_struct my_struct)
+{
     my_struct_reset_to_default(my_struct);
-    if(my_struct->text != NULL){
+    if (my_struct->text != NULL)
+    {
         printf("Error at test_my_struct_reset_to_default !\n");
         return 1;
     }
     return 0;
 }
 
-int test_my_struct_cmp(p_s_my_struct my_struct_a, p_s_my_struct my_struct_b){
-    int check = my_struct_cmp(my_struct_a,my_struct_b);
-    if(check != 0){
+int test_my_struct_cmp(p_s_my_struct my_struct_a, p_s_my_struct my_struct_b)
+{
+    int check = my_struct_cmp(my_struct_a, my_struct_b);
+    if (check != 0)
+    {
         printf("Error at test_my_struct_cmp !\n");
         return 1;
     }
