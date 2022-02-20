@@ -1,45 +1,52 @@
+#include <stdio.h>
+#include <string.h>
 #include "random.h"
 #include "my_struct.h"
 
 p_s_my_struct my_struct_alloc()
 {
     p_s_my_struct my_struct = malloc(sizeof(s_my_struct));
+    my_struct_default_init(my_struct);
     return my_struct;
 }
-void my_struct_free(p_s_my_struct p_vector)
+void my_struct_free(p_s_my_struct p_my_struct)
 {
-    free(p_vector->text);
-    free(p_vector);
-    p_vector = NULL;
+    free(p_my_struct->text);
+    free(p_my_struct);
+    p_my_struct = NULL;
 }
-void my_struct_default_init(p_s_my_struct p_vector)
+void my_struct_default_init(p_s_my_struct p_my_struct)
 {
-    p_vector->number = 0;
-    p_vector->text = NULL;
+    p_my_struct->number = 0;
+    p_my_struct->text = NULL;
 }
-void my_struct_randoms_init(p_s_my_struct p_vector)
+void my_struct_randoms_init(p_s_my_struct p_my_struct)
 {
-    size_t text_size = random_size_t(1, 10);
-    p_vector->text = malloc(sizeof(unsigned char) * text_size);
-    random_init_string(p_vector->text, text_size);
-    p_vector->number = random_double(1, 100);
+    size_t text_size = random_size_t(3, 5);
+    p_my_struct->text = malloc(sizeof(unsigned char) * text_size);
+    random_init_string(p_my_struct->text, text_size);
+    p_my_struct->number = random_double(1, 100);
 }
-void my_struct_reset_to_default(p_s_my_struct p_vector)
+void my_struct_reset_to_default(p_s_my_struct p_my_struct)
 {
-    if (p_vector->text != NULL)
+    if (p_my_struct->text != NULL)
     {
-        p_vector->text = NULL;
-        free(p_vector->text);
+        p_my_struct->text = NULL;
+        free(p_my_struct->text);
     }
-    p_vector->number = 0;
+    p_my_struct->number = 0;
 }
 void my_struct_copy(p_s_my_struct p_src, p_s_my_struct p_dest)
 {
     p_dest->number = p_src->number;
-    p_dest->text = realloc(p_dest->text, sizeof(p_src->text));
-    for (size_t i = 0; p_src->text[i] != '\0'; i++)
+    if (p_src->text == NULL)
     {
-        p_dest->text[i] = p_src->text[i];
+        p_dest->text = NULL;
+    }
+    else
+    {
+        p_dest->text = malloc(sizeof(p_src->text));
+        strcpy(p_dest->text, p_src->text);
     }
 }
 int my_struct_cmp(p_s_my_struct p_vector_a, p_s_my_struct p_vector_b)
@@ -58,8 +65,15 @@ int my_struct_cmp(p_s_my_struct p_vector_a, p_s_my_struct p_vector_b)
     }
 }
 
-void my_struct_print(p_s_my_struct p_vector)
+void my_struct_print(p_s_my_struct p_my_struct)
 {
-    printf("%f\n", p_vector->number);
-    printf("%s\n", p_vector->text);
+    printf("%f\n", p_my_struct->number);
+    if (p_my_struct->text == NULL)
+    {
+        printf("NULL\n");
+    }
+    else
+    {
+        printf("%s\n", p_my_struct->text);
+    }
 }
