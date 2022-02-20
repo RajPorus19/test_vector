@@ -8,7 +8,6 @@
 void insert_erase_random(p_s_vector p_vector, size_t n)
 {
     p_s_my_struct value = my_struct_alloc();
-    //my_struct_randoms_init(value);
     for (size_t i = 0; i < n; i++)
     {
         size_t position = random_size_t(0, p_vector->length - 1);
@@ -22,48 +21,52 @@ void insert_erase_random(p_s_vector p_vector, size_t n)
     my_struct_free(value);
 }
 
-// void insert_erase_head(p_s_vector p_vector, size_t n)
-// {
-//     for (size_t i = 0; i < n; i++)
-//     {
-//         size_t position = 0;
-//         double value = random_double(-10, 10);
-//         vector_insert(p_vector, position, value);
-//         vector_erase(p_vector, position);
-//     }
-// }
+void insert_erase_head(p_s_vector p_vector, size_t n)
+{
+    p_s_my_struct value = my_struct_alloc();
+    for (size_t i = 0; i < n; i++)
+    {
+        size_t position = 0;
+        vector_insert(p_vector, position, value);
+        vector_erase(p_vector, position);
+    }
+    my_struct_free(value);
+}
 
-// void insert_erase_tail(p_s_vector p_vector, size_t n)
-// {
-//     for (size_t i = 0; i < n; i++)
-//     {
-//         double value = random_double(-10, 10);
-//         vector_push_back(p_vector, value);
-//         vector_pop_back(p_vector);
-//     }
-// }
+void insert_erase_tail(p_s_vector p_vector, size_t n)
+{
+    p_s_my_struct value = my_struct_alloc();
+    for (size_t i = 0; i < n; i++)
+    {
+        vector_push_back(p_vector, value);
+        vector_pop_back(p_vector);
+    }
+    my_struct_free(value);
+}
 
-// void read_write_random(p_s_vector p_vector, size_t n)
-// {
-//     for (size_t i = 0; i < n; i++)
-//     {
-//         size_t position = random_size_t(0, p_vector->length - 1);
-//         double value = random_double(-10, 10);
-//         vector_set(p_vector, position, value);
-//     }
-// }
+void read_write_random(p_s_vector p_vector, size_t n)
+{
+    p_s_my_struct value = my_struct_alloc();
+    for (size_t i = 0; i < n; i++)
+    {
+        size_t position = random_size_t(0, p_vector->length - 1);
+        vector_set(p_vector, position, value);
+    }
+    my_struct_free(value);
+}
 
-// void read_write_sequential(p_s_vector p_vector, size_t n)
-// {
-//     for (size_t i = 0; i < n; i++)
-//     {
-//         for (size_t pos = 0; pos < p_vector->length; pos++)
-//         {
-//             double value = random_double(-10, 10);
-//             vector_set(p_vector, pos, value);
-//         }
-//     }
-// }
+void read_write_sequential(p_s_vector p_vector, size_t n)
+{
+    p_s_my_struct value = my_struct_alloc();
+    for (size_t i = 0; i < n; i++)
+    {
+        for (size_t pos = 0; pos < p_vector->length; pos++)
+        {
+            vector_set(p_vector, pos, value);
+        }
+    }
+    my_struct_free(value);
+}
 
 // void bubble_sort(p_s_vector p_vector, size_t n)
 // {
@@ -95,6 +98,11 @@ int main(int argc, char *argv[])
 
     p_s_vector vect = vector_alloc(3, sizeof(s_my_struct), my_struct_default_init, my_struct_reset_to_default, my_struct_copy, my_struct_print);
     insert_erase_random(vect, 3);
+    insert_erase_head(vect, 3);
+    insert_erase_tail(vect, 3);
+    read_write_random(vect, 3);
+    read_write_sequential(vect, 3);
+    //bubble_sort(vect, 3);
     vector_free(vect);
 
     // if (argc == 4)
