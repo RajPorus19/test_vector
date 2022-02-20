@@ -23,7 +23,14 @@ void my_struct_default_init(p_s_my_struct p_my_struct)
 void my_struct_randoms_init(p_s_my_struct p_my_struct)
 {
     size_t text_size = random_size_t(3, 5);
-    p_my_struct->text = malloc(sizeof(unsigned char) * text_size);
+    if (p_my_struct->text == NULL)
+    {
+        p_my_struct->text = malloc(sizeof(unsigned char) * text_size);
+    }
+    else
+    {
+        p_my_struct->text = realloc(p_my_struct->text, sizeof(unsigned char) * text_size);
+    }
     random_init_string(p_my_struct->text, text_size);
     p_my_struct->number = random_double(1, 100);
 }
@@ -31,8 +38,8 @@ void my_struct_reset_to_default(p_s_my_struct p_my_struct)
 {
     if (p_my_struct->text != NULL)
     {
-        p_my_struct->text = NULL;
         free(p_my_struct->text);
+        p_my_struct->text = NULL;
     }
     p_my_struct->number = 0;
 }
