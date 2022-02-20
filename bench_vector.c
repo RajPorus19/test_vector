@@ -68,27 +68,31 @@ void read_write_sequential(p_s_vector p_vector, size_t n)
     my_struct_free(value);
 }
 
-// void bubble_sort(p_s_vector p_vector, size_t n)
-// {
-//     for (size_t a = 0; a < n; a++)
-//     {
-//         read_write_sequential(p_vector, 1);
+void bubble_sort(p_s_vector p_vector, size_t n)
+{
+    p_s_my_struct tmp_a = my_struct_alloc();
+    p_s_my_struct tmp_b = my_struct_alloc();
+    for (size_t a = 0; a < n; a++)
+    {
+        read_write_sequential(p_vector, 1);
 
-//         double tmp = 0;
-//         for (size_t i = p_vector->length - 1; i > 0; i--)
-//         {
-//             for (size_t j = 0; j < i; j++)
-//             {
-//                 if (p_vector->array[j + 1] < p_vector->array[j])
-//                 {
-//                     tmp = p_vector->array[j + 1];
-//                     p_vector->array[j + 1] = p_vector->array[j];
-//                     p_vector->array[j] = tmp;
-//                 }
-//             }
-//         }
-//     }
-// }
+        for (size_t i = p_vector->length - 1; i > 0; i--)
+        {
+            for (size_t j = 0; j < i; j++)
+            {
+                vector_get(p_vector, j + 1, tmp_a);
+                vector_get(p_vector, j, tmp_b);
+                if (my_struct_cmp(tmp_a, tmp_b) == 1)
+                {
+                    vector_set(p_vector, j + 1, tmp_b);
+                    vector_set(p_vector, j, tmp_a);
+                }
+            }
+        }
+    }
+    my_struct_free(tmp_a);
+    my_struct_free(tmp_b);
+}
 
 int main(int argc, char *argv[])
 {
@@ -117,8 +121,8 @@ int main(int argc, char *argv[])
             read_write_random(vector, n);
         else if (strcmp(test_name, "read_write_sequential") == 0)
             read_write_sequential(vector, n);
-        //else if (strcmp(test_name, "bubble_sort") == 0)
-            //bubble_sort(vector, n);
+        else if (strcmp(test_name, "bubble_sort") == 0)
+            bubble_sort(vector, n);
         else
             printf("Write a valid test name\n");
         vector_free(vector);
@@ -133,7 +137,7 @@ int main(int argc, char *argv[])
         insert_erase_tail(vector, n);
         read_write_random(vector, n);
         read_write_sequential(vector, n);
-        //bubble_sort(vector, n);
+        bubble_sort(vector, n);
         vector_free(vector);
     }
     else
@@ -149,7 +153,7 @@ int main(int argc, char *argv[])
         insert_erase_tail(vector, n);
         read_write_random(vector, n);
         read_write_sequential(vector, n);
-        //bubble_sort(vector, n);
+        bubble_sort(vector, n);
         vector_free(vector);
     }
 
