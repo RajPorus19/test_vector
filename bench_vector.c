@@ -7,18 +7,18 @@
 
 void insert_erase_random(p_s_vector p_vector, size_t n)
 {
-    p_s_my_struct value = my_struct_alloc();
     for (size_t i = 0; i < n; i++)
     {
+        p_s_my_struct value = my_struct_alloc();
         size_t position = random_size_t(0, p_vector->length - 1);
         vector_insert(p_vector, position, value);
+        my_struct_free(value);
     }
     for (size_t i = 0; i < n; i++)
     {
         size_t position = random_size_t(0, p_vector->length - 1);
         vector_erase(p_vector, position);
     }
-    my_struct_free(value);
 }
 
 void insert_erase_head(p_s_vector p_vector, size_t n)

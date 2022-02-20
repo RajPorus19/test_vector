@@ -127,6 +127,7 @@ void vector_erase(p_s_vector p_vector, size_t i)
   {
     vector_set(p_vector, j, p_vector->array + (j + 1) * p_vector->size_of_data);
   }
+  p_vector->data_reset_to_init(p_vector->array + p_vector->length * p_vector->size_of_data);
   vector_realloc(p_vector, p_vector->size_of_data * p_vector->length);
 }
 
