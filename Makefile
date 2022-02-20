@@ -44,22 +44,22 @@ test_random: test_random.o random.o
 # bench_vector
 bench_vector.o : bench_vector.c
 	gcc -Wall -Wextra -g -c bench_vector.c
-bench_vector : bench_vector.o vector.o random.o
-	gcc bench_vector.o vector.o random.o -g -o bench_vector
+bench_vector : bench_vector.o vector.o random.o my_struct.o
+	gcc bench_vector.o vector.o random.o my_struct.o -g -o bench_vector
 
 # vector_v2
 vector_v2.o : vector.c vector.h
 	gcc -Wall -Wextra -g -c vector.c -D V2 -o vector_v2.o
 test_vector_v2.o : test_vector.c
 	gcc -Wall -Wextra -g -c test_vector.c -D V2 -o test_vector_v2.o
-test_vector_v2 : test_vector_v2.o vector_v2.o
-	gcc test_vector_v2.o vector_v2.o -g -o test_vector_v2
+test_vector_v2 : test_vector_v2.o vector_v2.o my_struct.o random.o
+	gcc test_vector_v2.o vector_v2.o my_struct.o random.o -g -o test_vector_v2
 
 # bench_vector_v2
 bench_vector_v2.o : bench_vector.c
 	gcc -Wall -Wextra -g -c bench_vector.c -D V2 -o bench_vector_v2.o
-bench_vector_v2 : bench_vector_v2.o vector_v2.o random.o
-	gcc bench_vector_v2.o vector_v2.o random.o -g -o bench_vector_v2
+bench_vector_v2 : bench_vector_v2.o vector_v2.o my_struct.o random.o
+	gcc bench_vector_v2.o vector_v2.o my_struct.o random.o -g -o bench_vector_v2
 
 # my_struct
 my_struct.o : my_struct.c my_struct.h
