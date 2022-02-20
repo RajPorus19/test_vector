@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
         printf("array length : %ld\n", length);
         printf("Tests number : %ld\n", n);
 
-        p_s_vector vector = vector_alloc(length, sizeof(s_my_struct), my_struct_default_init, my_struct_reset_to_default, my_struct_copy, my_struct_print);
+        p_s_vector vector = vector_alloc(length, sizeof(s_my_struct), (t_data_default_init)my_struct_default_init, (t_data_reset_to_init)my_struct_reset_to_default, (t_data_cpy)my_struct_copy, (t_data_print)my_struct_print);
 
         if (strcmp(test_name, "insert_erase_random") == 0)
             insert_erase_random(vector, n);
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
     {
         length = atoi(argv[1]);
         n = atoi(argv[2]);
-        p_s_vector vector = vector_alloc(length, sizeof(s_my_struct), my_struct_default_init, my_struct_reset_to_default, my_struct_copy, my_struct_print);
+        p_s_vector vector = vector_alloc(length, sizeof(s_my_struct), (t_data_default_init)my_struct_default_init, (t_data_reset_to_init)my_struct_reset_to_default, (t_data_cpy)my_struct_copy, (t_data_print)my_struct_print);
         insert_erase_random(vector, n);
         insert_erase_head(vector, n);
         insert_erase_tail(vector, n);
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
         printf("Tests number\n");
         scanf("%ld", &n);
 
-        p_s_vector vector = vector_alloc(length, sizeof(s_my_struct), my_struct_default_init, my_struct_reset_to_default, my_struct_copy, my_struct_print);
+        p_s_vector vector = vector_alloc(length, sizeof(s_my_struct), (t_data_default_init)my_struct_default_init, (t_data_reset_to_init)my_struct_reset_to_default, (t_data_cpy)my_struct_copy, (t_data_print)my_struct_print);
         insert_erase_random(vector, n);
         insert_erase_head(vector, n);
         insert_erase_tail(vector, n);

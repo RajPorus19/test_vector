@@ -46,7 +46,7 @@ void my_struct_copy(p_s_my_struct p_src, p_s_my_struct p_dest)
     else
     {
         p_dest->text = malloc(sizeof(p_src->text));
-        strcpy(p_dest->text, p_src->text);
+        strcpy((char *)p_dest->text, (char *)p_src->text);
     }
 }
 int my_struct_cmp(p_s_my_struct p_vector_a, p_s_my_struct p_vector_b)

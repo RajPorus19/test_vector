@@ -18,7 +18,7 @@ int main(void)
 {
 	int counter = 0;
 	// run tests
-	p_s_vector vect = vector_alloc(3, sizeof(s_my_struct), my_struct_default_init, my_struct_reset_to_default, my_struct_copy, my_struct_print);
+	p_s_vector vect = vector_alloc(3, sizeof(s_my_struct), (t_data_default_init)my_struct_default_init, (t_data_reset_to_init)my_struct_reset_to_default, (t_data_cpy)my_struct_copy, (t_data_print)my_struct_print);
 	// vector_print(vect);
 	test_vector_alloc(&counter, vect);
 	test_insert_vector(&counter, vect);

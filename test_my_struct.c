@@ -95,4 +95,5 @@ int test_my_struct_cmp(p_s_my_struct my_struct_a, p_s_my_struct my_struct_b){
         printf("Error at test_my_struct_cmp !\n");
         return 1;
     }
+    return 0;
 }
