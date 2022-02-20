@@ -96,71 +96,62 @@ int main(int argc, char *argv[])
     size_t length;
     size_t n;
 
-    p_s_vector vect = vector_alloc(3, sizeof(s_my_struct), my_struct_default_init, my_struct_reset_to_default, my_struct_copy, my_struct_print);
-    insert_erase_random(vect, 3);
-    insert_erase_head(vect, 3);
-    insert_erase_tail(vect, 3);
-    read_write_random(vect, 3);
-    read_write_sequential(vect, 3);
-    //bubble_sort(vect, 3);
-    vector_free(vect);
+    if (argc == 4)
+    {
+        length = atoi(argv[1]);
+        n = atoi(argv[2]);
+        test_name = argv[3];
+        printf("Test name : %s\n", test_name);
+        printf("array length : %ld\n", length);
+        printf("Tests number : %ld\n", n);
 
-    // if (argc == 4)
-    // {
-    //     length = atoi(argv[1]);
-    //     n = atoi(argv[2]);
-    //     test_name = argv[3];
-    //     printf("Test name : %s\n", test_name);
-    //     printf("array length : %ld\n", length);
-    //     printf("Tests number : %ld\n", n);
+        p_s_vector vector = vector_alloc(length, sizeof(s_my_struct), my_struct_default_init, my_struct_reset_to_default, my_struct_copy, my_struct_print);
 
-    //     p_s_vector vector = vector_alloc(length);
+        if (strcmp(test_name, "insert_erase_random") == 0)
+            insert_erase_random(vector, n);
+        else if (strcmp(test_name, "insert_erase_head") == 0)
+            insert_erase_head(vector, n);
+        else if (strcmp(test_name, "insert_erase_tail") == 0)
+            insert_erase_tail(vector, n);
+        else if (strcmp(test_name, "read_write_random") == 0)
+            read_write_random(vector, n);
+        else if (strcmp(test_name, "read_write_sequential") == 0)
+            read_write_sequential(vector, n);
+        //else if (strcmp(test_name, "bubble_sort") == 0)
+            //bubble_sort(vector, n);
+        else
+            printf("Write a valid test name\n");
+        vector_free(vector);
+    }
+    else if (argc == 3)
+    {
+        length = atoi(argv[1]);
+        n = atoi(argv[2]);
+        p_s_vector vector = vector_alloc(length, sizeof(s_my_struct), my_struct_default_init, my_struct_reset_to_default, my_struct_copy, my_struct_print);
+        insert_erase_random(vector, n);
+        insert_erase_head(vector, n);
+        insert_erase_tail(vector, n);
+        read_write_random(vector, n);
+        read_write_sequential(vector, n);
+        //bubble_sort(vector, n);
+        vector_free(vector);
+    }
+    else
+    {
+        printf("array length\n");
+        scanf("%ld", &length);
+        printf("Tests number\n");
+        scanf("%ld", &n);
 
-    //     if (strcmp(test_name, "insert_erase_random") == 0)
-    //         insert_erase_random(vector, n);
-    //     else if (strcmp(test_name, "insert_erase_head") == 0)
-    //         insert_erase_head(vector, n);
-    //     else if (strcmp(test_name, "insert_erase_tail") == 0)
-    //         insert_erase_tail(vector, n);
-    //     else if (strcmp(test_name, "read_write_random") == 0)
-    //         read_write_random(vector, n);
-    //     else if (strcmp(test_name, "read_write_sequential") == 0)
-    //         read_write_sequential(vector, n);
-    //     else if (strcmp(test_name, "bubble_sort") == 0)
-    //         bubble_sort(vector, n);
-    //     else
-    //         printf("Write a valid test name\n");
-    //     vector_free(vector);
-    // }
-    // else if (argc == 3)
-    // {
-    //     length = atoi(argv[1]);
-    //     n = atoi(argv[2]);
-    //     p_s_vector vector = vector_alloc(length);
-    //     insert_erase_random(vector, n);
-    //     insert_erase_head(vector, n);
-    //     insert_erase_tail(vector, n);
-    //     read_write_random(vector, n);
-    //     read_write_sequential(vector, n);
-    //     bubble_sort(vector, n);
-    //     vector_free(vector);
-    // }
-    // else
-    // {
-    //     printf("array length\n");
-    //     scanf("%ld", &length);
-    //     printf("Tests number\n");
-    //     scanf("%ld", &n);
-
-    //     p_s_vector vector = vector_alloc(length);
-    //     insert_erase_random(vector, n);
-    //     insert_erase_head(vector, n);
-    //     insert_erase_tail(vector, n);
-    //     read_write_random(vector, n);
-    //     read_write_sequential(vector, n);
-    //     bubble_sort(vector, n);
-    //     vector_free(vector);
-    // }
+        p_s_vector vector = vector_alloc(length, sizeof(s_my_struct), my_struct_default_init, my_struct_reset_to_default, my_struct_copy, my_struct_print);
+        insert_erase_random(vector, n);
+        insert_erase_head(vector, n);
+        insert_erase_tail(vector, n);
+        read_write_random(vector, n);
+        read_write_sequential(vector, n);
+        //bubble_sort(vector, n);
+        vector_free(vector);
+    }
 
     return 1;
 }
